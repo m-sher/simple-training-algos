@@ -1,0 +1,69 @@
+[project]
+name = "grpo-atari"
+version = "0.1.0"
+description = "Group Relative Policy Optimization (GRPO) for Atari Breakout"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [
+    {name = "GRPO Team"}
+]
+keywords = ["reinforcement-learning", "grpo", "atari", "tensorflow", "deep-learning"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+dependencies = [
+    "tensorflow>=2.15.0",
+    "tf-agents>=0.19.0",
+    "gymnasium>=1.0.0",
+    "ale-py>=0.8.0",
+    "numpy>=1.24.0",
+    "opencv-python-headless>=4.8.0",
+    "Pillow>=10.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-timeout>=2.0.0",
+]
+
+[project.scripts]
+grpo-train = "grpo_atari.cli.train:main"
+grpo-eval = "grpo_atari.cli.eval:main"
+grpo-test = "grpo_atari.cli.test:main"
+grpo-demo = "grpo_atari.cli.demo:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["grpo_atari"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --tb=short"
+log_cli = true
+log_cli_level = "INFO"
+log_cli_format = "%(asctime)s [%(levelname)s] %(message)s"
+log_cli_date_format = "%H:%M:%S"
+markers = [
+    "slow: marks tests as slow",
+    "integration: marks tests as integration tests",
+]
+filterwarnings = [
+    "ignore::DeprecationWarning",
+    "ignore::UserWarning",
+]
+timeout = 120
